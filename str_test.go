@@ -9,9 +9,9 @@ import (
 // Left
 
 var LeftPatternTests = []struct {
-	s        string
-	p        string
-	c        int
+	src      string
+	pat      string
+	count    int
 	expected string
 }{
 	{"D", "", 1, "D"},
@@ -32,9 +32,9 @@ var LeftPatternTests = []struct {
 func TestLeft(t *testing.T) {
 	for _, tc := range LeftPatternTests {
 		tc := tc
-		t.Run(tc.s, func(t *testing.T) {
+		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
-			res := Left(tc.s, tc.p, tc.c)
+			res := Left(tc.src, tc.pat, tc.count)
 			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
 		})
 	}
@@ -42,8 +42,8 @@ func TestLeft(t *testing.T) {
 
 // TruncLeft
 var TruncLeftPatterns = []struct {
-	s        string
-	c        int
+	src      string
+	count    int
 	expected string
 }{
 	{"A", 1, "A"},
@@ -62,9 +62,9 @@ var TruncLeftPatterns = []struct {
 func TestTruncLeft(t *testing.T) {
 	for _, tc := range TruncLeftPatterns {
 		tc := tc
-		t.Run(tc.s, func(t *testing.T) {
+		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
-			res := TruncLeft(tc.s, tc.c)
+			res := TruncLeft(tc.src, tc.count)
 			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
 		})
 	}
@@ -73,9 +73,9 @@ func TestTruncLeft(t *testing.T) {
 // LeftLen
 
 var LeftLenPatternTests = []struct {
-	s        string
-	p        string
-	c        int
+	src      string
+	pat      string
+	count    int
 	expected string
 }{
 	{"D", "", 1, "D"},
@@ -96,9 +96,9 @@ var LeftLenPatternTests = []struct {
 func TestLeftLen(t *testing.T) {
 	for _, tc := range LeftLenPatternTests {
 		tc := tc
-		t.Run(tc.s, func(t *testing.T) {
+		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
-			res := LeftLen(tc.s, tc.p, tc.c)
+			res := LeftLen(tc.src, tc.pat, tc.count)
 			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
 		})
 	}
@@ -107,8 +107,8 @@ func TestLeftLen(t *testing.T) {
 // LJust
 
 var LJustPatternTests = []struct {
-	s        string
-	c        int
+	src      string
+	count    int
 	expected string
 }{
 	{"D", 1, "D "},
@@ -129,9 +129,9 @@ var LJustPatternTests = []struct {
 func TestLJust(t *testing.T) {
 	for _, tc := range LJustPatternTests {
 		tc := tc
-		t.Run(tc.s, func(t *testing.T) {
+		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
-			res := LJust(tc.s, tc.c)
+			res := LJust(tc.src, tc.count)
 			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
 		})
 	}
@@ -140,8 +140,8 @@ func TestLJust(t *testing.T) {
 // LJustLen
 
 var LJustLenPatternTests = []struct {
-	s        string
-	c        int
+	src      string
+	count    int
 	expected string
 }{
 	{"D", 1, "D"},
@@ -162,9 +162,9 @@ var LJustLenPatternTests = []struct {
 func TestLJustLen(t *testing.T) {
 	for _, tc := range LJustLenPatternTests {
 		tc := tc
-		t.Run(tc.s, func(t *testing.T) {
+		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
-			res := LJustLen(tc.s, tc.c)
+			res := LJustLen(tc.src, tc.count)
 			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
 		})
 	}
@@ -173,9 +173,9 @@ func TestLJustLen(t *testing.T) {
 // Right
 
 var RightPatternTests = []struct {
-	s        string
-	p        string
-	c        int
+	src      string
+	pat      string
+	count    int
 	expected string
 }{
 	{"D", "", 1, "D"},
@@ -196,9 +196,9 @@ var RightPatternTests = []struct {
 func TestRight(t *testing.T) {
 	for _, tc := range RightPatternTests {
 		tc := tc
-		t.Run(tc.s, func(t *testing.T) {
+		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
-			res := Right(tc.s, tc.p, tc.c)
+			res := Right(tc.src, tc.pat, tc.count)
 			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
 		})
 	}
@@ -206,8 +206,8 @@ func TestRight(t *testing.T) {
 
 // TruncRight
 var TruncRightPatterns = []struct {
-	s        string
-	c        int
+	src      string
+	count    int
 	expected string
 }{
 	{"A", 1, "A"},
@@ -226,9 +226,9 @@ var TruncRightPatterns = []struct {
 func TestTruncRight(t *testing.T) {
 	for _, tc := range TruncRightPatterns {
 		tc := tc
-		t.Run(tc.s, func(t *testing.T) {
+		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
-			res := TruncRight(tc.s, tc.c)
+			res := TruncRight(tc.src, tc.count)
 			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
 		})
 	}
@@ -237,9 +237,9 @@ func TestTruncRight(t *testing.T) {
 // RightLen
 
 var RightLenPatternTests = []struct {
-	s        string
-	p        string
-	c        int
+	src      string
+	pat      string
+	count    int
 	expected string
 }{
 	{"D", "", 1, "D"},
@@ -261,9 +261,9 @@ var RightLenPatternTests = []struct {
 func TestRightLen(t *testing.T) {
 	for _, tc := range RightLenPatternTests {
 		tc := tc
-		t.Run(tc.s, func(t *testing.T) {
+		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
-			res := RightLen(tc.s, tc.p, tc.c)
+			res := RightLen(tc.src, tc.pat, tc.count)
 			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
 		})
 	}
@@ -272,8 +272,8 @@ func TestRightLen(t *testing.T) {
 // RJust
 
 var RJustPatternTests = []struct {
-	s        string
-	c        int
+	src      string
+	count    int
 	expected string
 }{
 	{"D", 1, " D"},
@@ -294,9 +294,9 @@ var RJustPatternTests = []struct {
 func TestRJust(t *testing.T) {
 	for _, tc := range RJustPatternTests {
 		tc := tc
-		t.Run(tc.s, func(t *testing.T) {
+		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
-			res := RJust(tc.s, tc.c)
+			res := RJust(tc.src, tc.count)
 			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
 		})
 	}
@@ -305,8 +305,8 @@ func TestRJust(t *testing.T) {
 // RJustLen
 
 var RJustLenPatternTests = []struct {
-	s        string
-	c        int
+	src      string
+	count    int
 	expected string
 }{
 	{"D", 1, "D"},
@@ -327,9 +327,9 @@ var RJustLenPatternTests = []struct {
 func TestRJustLen(t *testing.T) {
 	for _, tc := range RJustLenPatternTests {
 		tc := tc
-		t.Run(tc.s, func(t *testing.T) {
+		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
-			res := RJustLen(tc.s, tc.c)
+			res := RJustLen(tc.src, tc.count)
 			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
 		})
 	}
@@ -338,8 +338,8 @@ func TestRJustLen(t *testing.T) {
 // ZFill
 
 var ZFillPatternTests = []struct {
-	s        string
-	c        int
+	src      string
+	count    int
 	expected string
 }{
 	{"D", 1, "0D"},
@@ -360,9 +360,9 @@ var ZFillPatternTests = []struct {
 func TestZFill(t *testing.T) {
 	for _, tc := range ZFillPatternTests {
 		tc := tc
-		t.Run(tc.s, func(t *testing.T) {
+		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
-			res := ZFill(tc.s, tc.c)
+			res := ZFill(tc.src, tc.count)
 			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
 		})
 	}
@@ -371,8 +371,8 @@ func TestZFill(t *testing.T) {
 // ZFillLen
 
 var ZFillLenPatternTests = []struct {
-	s        string
-	c        int
+	src      string
+	count    int
 	expected string
 }{
 	{"D", 1, "D"},
@@ -394,9 +394,9 @@ var ZFillLenPatternTests = []struct {
 func TestZFillLen(t *testing.T) {
 	for _, tc := range ZFillLenPatternTests {
 		tc := tc
-		t.Run(tc.s, func(t *testing.T) {
+		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
-			res := ZFillLen(tc.s, tc.c)
+			res := ZFillLen(tc.src, tc.count)
 			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
 		})
 	}
