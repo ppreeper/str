@@ -6,10 +6,7 @@ import (
 
 // Left pads string on left side with pattern pat, count count times
 func Left(src string, pat string, count int) string {
-	if count <= 0 {
-		return ""
-	}
-	if len(pat) < 1 {
+	if count <= 0 || len(pat) < 1 {
 		return src
 	}
 	return strings.Repeat(pat, count) + src
@@ -17,10 +14,7 @@ func Left(src string, pat string, count int) string {
 
 // Right pads string on right side with pattern pat, count count times
 func Right(src string, pat string, count int) string {
-	if count <= 0 {
-		return ""
-	}
-	if len(pat) < 1 {
+	if count <= 0 || len(pat) < 1 {
 		return src
 	}
 	return src + strings.Repeat(pat, count)
@@ -50,7 +44,7 @@ func TruncRight(src string, length int) string {
 	return string(ret[len(src)-length:])
 }
 
-// LeftLen pads string on left side with pattern p, returns string of length l
+// LeftLen pads string on left side with pattern, returns right side string of length
 func LeftLen(src string, pat string, length int) string {
 	if length <= 0 {
 		return ""
@@ -58,7 +52,8 @@ func LeftLen(src string, pat string, length int) string {
 	if len(pat) < 1 {
 		return src
 	}
-	return string([]rune(src + strings.Repeat(pat, length))[:length])
+	ret := []rune(strings.Repeat(pat, length) + src)
+	return string(ret[len(ret)-length:])
 }
 
 // RightLen pads string on left side with p, returns string of length l
@@ -69,27 +64,8 @@ func RightLen(src string, pat string, length int) string {
 	if len(pat) < 1 {
 		return src
 	}
-	return string([]rune(src + strings.Repeat(pat, length))[:length])
-}
-
-// ZFill fills string with 0 on left c time
-func ZFill(src string, count int) string {
-	if count <= 0 {
-		return src
-	}
-	return strings.Repeat("0", count) + src
-}
-
-// ZFillLen fills string with 0 on left side returns string length of l
-func ZFillLen(src string, length int) string {
-	if length <= 0 {
-		return ""
-	}
-	ret := strings.Repeat("0", length) + src
-	if length > len(ret) {
-		return src
-	}
-	return string([]rune(ret)[len(ret)-length:])
+	ret := []rune(src + strings.Repeat(pat, length))
+	return string(ret[:length])
 }
 
 // LJust returns left justified string with space(s) filler
@@ -126,6 +102,26 @@ func RJustLen(src string, length int) string {
 		return ""
 	}
 	ret := strings.Repeat(" ", length) + src
+	if length > len(ret) {
+		return src
+	}
+	return string([]rune(ret)[len(ret)-length:])
+}
+
+// ZFill fills string with 0 on left c time
+func ZFill(src string, count int) string {
+	if count <= 0 {
+		return src
+	}
+	return strings.Repeat("0", count) + src
+}
+
+// ZFillLen fills string with 0 on left side returns string length of l
+func ZFillLen(src string, length int) string {
+	if length <= 0 {
+		return ""
+	}
+	ret := strings.Repeat("0", length) + src
 	if length > len(ret) {
 		return src
 	}
