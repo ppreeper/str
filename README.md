@@ -1,5 +1,4 @@
 ![Build Status](https://github.com/ppreeper/str/actions/workflows/go.yml/badge.svg)
-![Coverage Status](https://codecov.io/gh/ppreeper/str/branch/main/graph/badge.svg)
 
 # str
 
