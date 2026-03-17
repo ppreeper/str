@@ -114,8 +114,5 @@ func ZFillLen(src string, length int) string {
 		return ""
 	}
 	ret := strings.Repeat("0", length) + src
-	if len(ret) <= length {
-		return src
-	}
 	return ret[len(ret)-length:]
 }
