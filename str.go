@@ -80,9 +80,6 @@ func LJustLen(src string, length int) string {
 		return ""
 	}
 	ret := src + strings.Repeat(" ", length)
-	if len(ret) <= length {
-		return src
-	}
 	return ret[:length]
 }
 
@@ -100,9 +97,6 @@ func RJustLen(src string, length int) string {
 		return ""
 	}
 	ret := strings.Repeat(" ", length) + src
-	if len(ret) <= length {
-		return src
-	}
 	return ret[len(ret)-length:]
 }
 
