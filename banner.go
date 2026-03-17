@@ -1,7 +1,6 @@
 package str
 
 import (
-	"fmt"
 	"slices"
 	"strings"
 )
@@ -58,10 +57,6 @@ func (b *Banner) NoHeader() *Banner {
 func (b *Banner) NoFooter() *Banner {
 	b.Footer = false
 	return b
-}
-
-func (b *Banner) Println(msg ...string) {
-	fmt.Printf("%s\n", b.SPrint(msg...))
 }
 
 func (b *Banner) SPrint(msg ...string) string {
