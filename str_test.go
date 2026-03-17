@@ -1,8 +1,9 @@
 package str
 
 import (
-	"github.com/ppreeper/assert"
 	"testing"
+
+	"github.com/ppreeper/assert"
 )
 
 // LeftRightPatterns

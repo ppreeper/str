@@ -74,7 +74,7 @@ func (b *Banner) SPrint(msg ...string) string {
 	banner := []string{}
 	// Append the header pattern to the banner if the header is enabled
 	if b.Header {
-		banner = append(banner, RightLen(b.SPat, b.Pat, totalLen))
+		banner = append(banner, RightLen(b.SPat, b.Pat, totalLen)+b.EPat)
 	}
 
 	// Append the banner message to the banner
@@ -82,7 +82,7 @@ func (b *Banner) SPrint(msg ...string) string {
 
 	// Append the footer pattern to the banner if the footer is enabled
 	if b.Footer {
-		banner = append(banner, RightLen(b.SPat, b.Pat, totalLen))
+		banner = append(banner, RightLen(b.SPat, b.Pat, totalLen)+b.EPat)
 	}
 
 	return strings.Join(banner, "\n")
