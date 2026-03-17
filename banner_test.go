@@ -1,7 +1,6 @@
 package str
 
 import (
-	"fmt"
 	"strings"
 	"testing"
 
@@ -109,11 +108,18 @@ func TestBannerMsg(t *testing.T) {
 			if !tc.footer {
 				b.NoFooter()
 			}
-			fmt.Printf("Expected\n%s\n", tc.res)
 			res := b.SPrint(tc.msg)
-			fmt.Printf("Got:\n%s\n", res)
-
 			assert.Equal(t, tc.res, res)
 		})
 	}
+}
+
+// BenchmarkBannerDefault benchmarks the default banner generation.
+func BenchmarkBannerDefault(b *testing.B) {
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			b := NewBanner()
+			b.SPrint("message")
+		}
+	})
 }
