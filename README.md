@@ -137,45 +137,45 @@ Current benchmarks
 goos: linux
 goarch: amd64
 pkg: github.com/ppreeper/str
-cpu: AMD Ryzen 7 7735HS with Radeon Graphics
-BenchmarkLeft_D_a_4             177426610               33.98 ns/op            4 B/op          1 allocs/op
-BenchmarkLeft_D_aa_2            199887630               29.80 ns/op            4 B/op          1 allocs/op
-BenchmarkLeft_D_utf8_4          147985876               40.27 ns/op           16 B/op          1 allocs/op
-BenchmarkLeft_D_utf8_2_2        164434153               36.02 ns/op           16 B/op          1 allocs/op
-BenchmarkLeft_D_a_200_1         56919225               103.7 ns/op           416 B/op          2 allocs/op
-BenchmarkLeft_D_a_100_2         60211620               100.8 ns/op           416 B/op          2 allocs/op
-BenchmarkRight_D_a_4            173296929               34.60 ns/op            4 B/op          1 allocs/op
-BenchmarkRight_D_aa_2           196698732               30.74 ns/op            4 B/op          1 allocs/op
-BenchmarkRight_D_utf8_4         151394588               40.14 ns/op           16 B/op          1 allocs/op
-BenchmarkRight_D_utf8_2_2       168813403               35.31 ns/op           16 B/op          1 allocs/op
-BenchmarkRight_D_a_200_1        57623094               104.8 ns/op           416 B/op          2 allocs/op
-BenchmarkRight_D_a_100_2        60113691               102.1 ns/op           416 B/op          2 allocs/op
-BenchmarkTruncLeft_ABCD_2       324979262               18.32 ns/op            0 B/op          0 allocs/op
-BenchmarkTruncRight_ABCD_2      329157414               18.20 ns/op            0 B/op          0 allocs/op
-BenchmarkLeftLen_D_utf8_4       55832942               107.5 ns/op            32 B/op          2 allocs/op
-BenchmarkLeftLen_D_a_4          84549571                70.22 ns/op           16 B/op          2 allocs/op
-BenchmarkLeftLen_D_a_200         4705328              1282 ns/op            1520 B/op          4 allocs/op
-BenchmarkRightLen_D_utf8_4      55781134               108.3 ns/op            32 B/op          2 allocs/op
-BenchmarkRightLen_D_a_4         85283271                69.94 ns/op           16 B/op          2 allocs/op
-BenchmarkRightLen_D_a_200        4587787              1279 ns/op            1520 B/op          4 allocs/op
-BenchmarkLJust_utf8_4           175381755               34.65 ns/op            4 B/op          1 allocs/op
-BenchmarkLJust_D_4              176793922               33.80 ns/op            4 B/op          1 allocs/op
-BenchmarkLJust_D_a_200          58400977               103.0 ns/op           416 B/op          2 allocs/op
-BenchmarkRJust_utf8_4           174684237               33.89 ns/op            4 B/op          1 allocs/op
-BenchmarkRJust_D_4              173668522               34.42 ns/op            4 B/op          1 allocs/op
-BenchmarkRJust_D_a_200          58833978               103.2 ns/op           416 B/op          2 allocs/op
-BenchmarkLJustLen_utf8_4        75187804                77.23 ns/op           16 B/op          2 allocs/op
-BenchmarkLJustLen_D_4           84242854                69.98 ns/op           16 B/op          2 allocs/op
-BenchmarkLJustLen_D_a_200        4625905              1282 ns/op            1520 B/op          4 allocs/op
-BenchmarkRJustLen_utf8_4        84421971                73.52 ns/op           16 B/op          2 allocs/op
-BenchmarkRJustLen_D_4           84456016                70.90 ns/op           16 B/op          2 allocs/op
-BenchmarkRJustLen_D_a_200        4756957              1275 ns/op            1520 B/op          4 allocs/op
-BenchmarkZFill_D_4              174243123               34.84 ns/op            4 B/op          1 allocs/op
-BenchmarkZFill_ABCD_8           164768880               36.71 ns/op            8 B/op          1 allocs/op
-BenchmarkZFill_D_a_200          56639906               102.5 ns/op           416 B/op          2 allocs/op
-BenchmarkZFillLen_D_4           82058068                70.89 ns/op           16 B/op          2 allocs/op
-BenchmarkZFillLen_ABCD_8        57930297               102.0 ns/op            24 B/op          2 allocs/op
-BenchmarkZFillLen_D_a_200        4752658              1272 ns/op            1520 B/op          4 allocs/op
+cpu: AMD Ryzen 7 7730U with Radeon Graphics
+BenchmarkLeft_D_a_4        	157036516	        39.14 ns/op	       8 B/op	       1 allocs/op
+BenchmarkLeft_D_aa_2       	162978108	        36.92 ns/op	       8 B/op	       1 allocs/op
+BenchmarkLeft_D_utf8_4     	123987159	        48.55 ns/op	      16 B/op	       1 allocs/op
+BenchmarkLeft_D_utf8_2_2   	120486356	        47.02 ns/op	      16 B/op	       1 allocs/op
+BenchmarkLeft_D_a_200_1    	50996754	       118.6  ns/op	     416 B/op	       2 allocs/op
+BenchmarkLeft_D_a_100_2    	49326704	       116.1  ns/op	     416 B/op	       2 allocs/op
+BenchmarkRight_D_a_4       	147770694	        39.45 ns/op	       8 B/op	       1 allocs/op
+BenchmarkRight_D_aa_2      	155074754	        42.53 ns/op	       8 B/op	       1 allocs/op
+BenchmarkRight_D_utf8_4    	100000000	        55.46 ns/op	      16 B/op	       1 allocs/op
+BenchmarkRight_D_utf8_2_2  	121760617	        50.69 ns/op	      16 B/op	       1 allocs/op
+BenchmarkRight_D_a_200_1   	49634521	       122.4  ns/op	     416 B/op	       2 allocs/op
+BenchmarkRight_D_a_100_2   	51117037	       117.2  ns/op	     416 B/op	       2 allocs/op
+BenchmarkTruncLeft_ABCD_2  	1000000000	         0.4239 ns/op	   0 B/op	       0 allocs/op
+BenchmarkTruncRight_ABCD_2 	1000000000	         0.4377 ns/op	   0 B/op	       0 allocs/op
+BenchmarkLeftLen_D_utf8_4  	85349582	        66.18 ns/op	      32 B/op	       2 allocs/op
+BenchmarkLeftLen_D_a_4     	97565781	        57.92 ns/op	      16 B/op	       2 allocs/op
+BenchmarkLeftLen_D_a_200   	49306604	       133.9  ns/op	     416 B/op	       2 allocs/op
+BenchmarkRightLen_D_utf8_4 	69864686	        74.59 ns/op	      32 B/op	       2 allocs/op
+BenchmarkRightLen_D_a_4    	92109033	        63.33 ns/op	      16 B/op	       2 allocs/op
+BenchmarkRightLen_D_a_200  	44261211	       126.5  ns/op	     416 B/op	       2 allocs/op
+BenchmarkLJust_utf8_4      	353983874	        16.90 ns/op	       0 B/op	       0 allocs/op
+BenchmarkLJust_D_4         	353393116	        16.48 ns/op	       0 B/op	       0 allocs/op
+BenchmarkLJust_D_a_200     	50105112	       120.8  ns/op	     416 B/op	       2 allocs/op
+BenchmarkRJust_utf8_4      	353591252	        16.68 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRJust_D_4         	355942543	        16.64 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRJust_D_a_200     	49439799	       122.4  ns/op	     416 B/op	       2 allocs/op
+BenchmarkLJustLen_utf8_4   	205331203	        29.84 ns/op	       8 B/op	       1 allocs/op
+BenchmarkLJustLen_D_4      	208440348	        27.88 ns/op	       5 B/op	       1 allocs/op
+BenchmarkLJustLen_D_a_200  	50121644	       120.6  ns/op	     416 B/op	       2 allocs/op
+BenchmarkRJustLen_utf8_4   	177719958	        34.20 ns/op	       8 B/op	       1 allocs/op
+BenchmarkRJustLen_D_4      	206099131	        28.32 ns/op	       5 B/op	       1 allocs/op
+BenchmarkRJustLen_D_a_200  	46419052	       120.5  ns/op	     416 B/op	       2 allocs/op
+BenchmarkZFill_D_4         	266757704	        22.58 ns/op	       0 B/op	       0 allocs/op
+BenchmarkZFill_ABCD_8      	270810826	        22.32 ns/op	       0 B/op	       0 allocs/op
+BenchmarkZFill_D_a_200     	45792751	       117.3  ns/op	     416 B/op	       2 allocs/op
+BenchmarkZFillLen_D_4      	152266942	        39.01 ns/op	       5 B/op	       1 allocs/op
+BenchmarkZFillLen_ABCD_8   	142578507	        43.14 ns/op	      16 B/op	       1 allocs/op
+BenchmarkZFillLen_D_a_200  	48201610	       120.3  ns/op	     416 B/op	       2 allocs/op
 PASS
-ok      github.com/ppreeper/str 288.716s
+ok  	github.com/ppreeper/str	282.959s
 ```
