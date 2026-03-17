@@ -25,11 +25,10 @@ func TruncLeft(src string, length int) string {
 	if length <= 0 {
 		return ""
 	}
-	if length > len(src) {
+	if len(src) <= length {
 		return src
 	}
-	ret := []rune(src)
-	return string(ret[:length])
+	return src[:length]
 }
 
 // TruncRight returns the last character or characters of a string.
@@ -37,11 +36,10 @@ func TruncRight(src string, length int) string {
 	if length <= 0 {
 		return ""
 	}
-	if length > len(src) {
+	if len(src) <= length {
 		return src
 	}
-	ret := []rune(src)
-	return string(ret[len(src)-length:])
+	return src[len(src)-length:]
 }
 
 // LeftLen pads string on left side with pattern, returns right side string of length
@@ -52,8 +50,8 @@ func LeftLen(src string, pat string, length int) string {
 	if len(pat) < 1 {
 		return src
 	}
-	ret := []rune(strings.Repeat(pat, length) + src)
-	return string(ret[len(ret)-length:])
+	ret := strings.Repeat(pat, length) + src
+	return ret[len(ret)-length:]
 }
 
 // RightLen pads string on left side with p, returns string of length l
@@ -64,8 +62,8 @@ func RightLen(src string, pat string, length int) string {
 	if len(pat) < 1 {
 		return src
 	}
-	ret := []rune(src + strings.Repeat(pat, length))
-	return string(ret[:length])
+	ret := src + strings.Repeat(pat, length)
+	return ret[:length]
 }
 
 // LJust returns left justified string with space(s) filler
@@ -82,10 +80,10 @@ func LJustLen(src string, length int) string {
 		return ""
 	}
 	ret := src + strings.Repeat(" ", length)
-	if length > len(ret) {
+	if len(ret) <= length {
 		return src
 	}
-	return string([]rune(ret)[:length])
+	return ret[:length]
 }
 
 // RJust returns right justified string with space(s) filler
@@ -102,10 +100,10 @@ func RJustLen(src string, length int) string {
 		return ""
 	}
 	ret := strings.Repeat(" ", length) + src
-	if length > len(ret) {
+	if len(ret) <= length {
 		return src
 	}
-	return string([]rune(ret)[len(ret)-length:])
+	return ret[len(ret)-length:]
 }
 
 // ZFill fills string with 0 on left c time
@@ -122,8 +120,8 @@ func ZFillLen(src string, length int) string {
 		return ""
 	}
 	ret := strings.Repeat("0", length) + src
-	if length > len(ret) {
+	if len(ret) <= length {
 		return src
 	}
-	return string([]rune(ret)[len(ret)-length:])
+	return ret[len(ret)-length:]
 }

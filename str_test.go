@@ -1,9 +1,8 @@
 package str
 
 import (
+	"github.com/ppreeper/assert"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 // LeftRightPatterns
@@ -35,7 +34,7 @@ func TestLeft(t *testing.T) {
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := Left(tc.src, tc.pat, tc.count)
-			assert.True(t, assert.ObjectsAreEqualValues(tc.left, res))
+			assert.Equal(t, tc.left, res)
 		})
 	}
 }
@@ -47,7 +46,7 @@ func TestRight(t *testing.T) {
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := Right(tc.src, tc.pat, tc.count)
-			assert.True(t, assert.ObjectsAreEqualValues(tc.right, res))
+			assert.Equal(t, tc.right, res)
 		})
 	}
 }
@@ -79,7 +78,7 @@ func TestTruncLeft(t *testing.T) {
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := TruncLeft(tc.src, tc.count)
-			assert.True(t, assert.ObjectsAreEqualValues(tc.left, res))
+			assert.Equal(t, tc.left, res)
 		})
 	}
 }
@@ -91,7 +90,7 @@ func TestTruncRight(t *testing.T) {
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := TruncRight(tc.src, tc.count)
-			assert.True(t, assert.ObjectsAreEqualValues(tc.right, res))
+			assert.Equal(t, tc.right, res)
 		})
 	}
 }
@@ -129,7 +128,7 @@ func TestLeftLen(t *testing.T) {
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := LeftLen(tc.src, tc.pat, tc.count)
-			assert.True(t, assert.ObjectsAreEqualValues(tc.left, res))
+			assert.Equal(t, tc.left, res)
 		})
 	}
 }
@@ -141,7 +140,7 @@ func TestRightLen(t *testing.T) {
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := RightLen(tc.src, tc.pat, tc.count)
-			assert.True(t, assert.ObjectsAreEqualValues(tc.right, res))
+			assert.Equal(t, tc.right, res)
 		})
 	}
 }
@@ -175,7 +174,7 @@ func TestLJust(t *testing.T) {
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := LJust(tc.src, tc.count)
-			assert.True(t, assert.ObjectsAreEqualValues(tc.left, res))
+			assert.Equal(t, tc.left, res)
 		})
 	}
 }
@@ -187,7 +186,7 @@ func TestRJust(t *testing.T) {
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := RJust(tc.src, tc.count)
-			assert.True(t, assert.ObjectsAreEqualValues(tc.right, res))
+			assert.Equal(t, tc.right, res)
 		})
 	}
 }
@@ -221,7 +220,7 @@ func TestLJustLen(t *testing.T) {
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := LJustLen(tc.src, tc.count)
-			assert.True(t, assert.ObjectsAreEqualValues(tc.left, res))
+			assert.Equal(t, tc.left, res)
 		})
 	}
 }
@@ -233,7 +232,7 @@ func TestRJustLen(t *testing.T) {
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := RJustLen(tc.src, tc.count)
-			assert.True(t, assert.ObjectsAreEqualValues(tc.right, res))
+			assert.Equal(t, tc.right, res)
 		})
 	}
 }
@@ -265,7 +264,7 @@ func TestZFill(t *testing.T) {
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := ZFill(tc.src, tc.count)
-			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
+			assert.Equal(t, tc.expected, res)
 		})
 	}
 }
@@ -298,7 +297,7 @@ func TestZFillLen(t *testing.T) {
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := ZFillLen(tc.src, tc.count)
-			assert.True(t, assert.ObjectsAreEqualValues(tc.expected, res))
+			assert.Equal(t, tc.expected, res)
 		})
 	}
 }
@@ -309,245 +308,321 @@ func TestZFillLen(t *testing.T) {
 // ##########
 // Left
 func BenchmarkLeft_D_a_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Left("D", "a", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Left("D", "a", 4)
+		}
+	})
 }
 
 func BenchmarkLeft_D_aa_2(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Left("D", "aa", 2)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Left("D", "aa", 2)
+		}
+	})
 }
 
 func BenchmarkLeft_D_utf8_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Left("D", "→", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Left("D", "→", 4)
+		}
+	})
 }
 
 func BenchmarkLeft_D_utf8_2_2(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Left("D", "→→", 2)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Left("D", "→→", 2)
+		}
+	})
 }
 
 func BenchmarkLeft_D_a_200_1(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Left("D", "a", 200)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Left("D", "a", 200)
+		}
+	})
 }
 
 func BenchmarkLeft_D_a_100_2(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Left("D", "aa", 100)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Left("D", "aa", 100)
+		}
+	})
 }
 
 // Right
 func BenchmarkRight_D_a_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Left("D", "a", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Right("D", "a", 4)
+		}
+	})
 }
 
 func BenchmarkRight_D_aa_2(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Right("D", "aa", 2)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Right("D", "aa", 2)
+		}
+	})
 }
 
 func BenchmarkRight_D_utf8_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Right("D", "→", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Right("D", "→", 4)
+		}
+	})
 }
 
 func BenchmarkRight_D_utf8_2_2(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Right("D", "→→", 2)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Right("D", "→→", 2)
+		}
+	})
 }
 
 func BenchmarkRight_D_a_200_1(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Right("D", "a", 200)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Right("D", "a", 200)
+		}
+	})
 }
 
 func BenchmarkRight_D_a_100_2(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Right("D", "aa", 100)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Right("D", "aa", 100)
+		}
+	})
 }
 
 // ##########
 // TruncLeft
 func BenchmarkTruncLeft_ABCD_2(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		TruncLeft("ABCD", 2)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			TruncLeft("ABCD", 2)
+		}
+	})
 }
 
 // TruncRight
 func BenchmarkTruncRight_ABCD_2(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		TruncRight("ABCD", 2)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			TruncRight("ABCD", 2)
+		}
+	})
 }
 
 // ##########
 // LeftLen
 func BenchmarkLeftLen_D_utf8_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		LeftLen("D", "→", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			LeftLen("D", "→", 4)
+		}
+	})
 }
 
 func BenchmarkLeftLen_D_a_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		LeftLen("D", "a", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			LeftLen("D", "a", 4)
+		}
+	})
 }
 
 func BenchmarkLeftLen_D_a_200(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		LeftLen("D", "a", 200)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			LeftLen("D", "a", 200)
+		}
+	})
 }
 
 // RightLen
 
 func BenchmarkRightLen_D_utf8_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		RightLen("D", "→", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			RightLen("D", "→", 4)
+		}
+	})
 }
 
 func BenchmarkRightLen_D_a_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		RightLen("D", "a", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			RightLen("D", "a", 4)
+		}
+	})
 }
 
 func BenchmarkRightLen_D_a_200(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		RightLen("D", "a", 200)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			RightLen("D", "a", 200)
+		}
+	})
 }
 
 // ##########
 // LJust
 func BenchmarkLJust_utf8_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		LJust("→", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			LJust("→", 4)
+		}
+	})
 }
 
 func BenchmarkLJust_D_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		LJust("D", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			LJust("D", 4)
+		}
+	})
 }
 
 func BenchmarkLJust_D_a_200(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		LJust("D", 200)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			LJust("D", 200)
+		}
+	})
 }
 
 // RJust
 func BenchmarkRJust_utf8_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		RJust("→", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			RJust("→", 4)
+		}
+	})
 }
 
 func BenchmarkRJust_D_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		RJust("D", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			RJust("D", 4)
+		}
+	})
 }
 
 func BenchmarkRJust_D_a_200(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		RJust("D", 200)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			RJust("D", 200)
+		}
+	})
 }
 
 // ##########
 // LJustLen
 func BenchmarkLJustLen_utf8_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		LJustLen("→", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			LJustLen("→", 4)
+		}
+	})
 }
 
 func BenchmarkLJustLen_D_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		LJustLen("D", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			LJustLen("D", 4)
+		}
+	})
 }
 
 func BenchmarkLJustLen_D_a_200(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		LJustLen("D", 200)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			LJustLen("D", 200)
+		}
+	})
 }
 
 // RJustLen
 func BenchmarkRJustLen_utf8_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		RJustLen("→", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			RJustLen("→", 4)
+		}
+	})
 }
 
 func BenchmarkRJustLen_D_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		RJustLen("D", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			RJustLen("D", 4)
+		}
+	})
 }
 
 func BenchmarkRJustLen_D_a_200(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		RJustLen("D", 200)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			RJustLen("D", 200)
+		}
+	})
 }
 
 // ZFill
 func BenchmarkZFill_D_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		ZFill("D", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			ZFill("D", 4)
+		}
+	})
 }
 
 func BenchmarkZFill_ABCD_8(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		ZFill("DDDD", 8)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			ZFill("DDDD", 8)
+		}
+	})
 }
 
 func BenchmarkZFill_D_a_200(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		ZFill("D", 200)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			ZFill("D", 200)
+		}
+	})
 }
 
 // ZFillLen
 func BenchmarkZFillLen_D_4(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		ZFillLen("D", 4)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			ZFillLen("D", 4)
+		}
+	})
 }
 
 func BenchmarkZFillLen_ABCD_8(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		ZFillLen("DDDD", 8)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			ZFillLen("DDDD", 8)
+		}
+	})
 }
 
 func BenchmarkZFillLen_D_a_200(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		ZFillLen("D", 200)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			ZFillLen("D", 200)
+		}
+	})
 }
