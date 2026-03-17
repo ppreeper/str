@@ -1,9 +1,11 @@
 package str
 
 import (
+	"fmt"
+	"strings"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/ppreeper/assert"
 )
 
 var BannerPatterns = []struct {
@@ -16,13 +18,71 @@ var BannerPatterns = []struct {
 	res        string
 	resDefault string
 }{
-	{"message", "//", "-", 0, true, true, "//-------\n//message\n//-------\n", "//---------\n// message\n//---------\n"},
-	{"message", "//", "-", 1, true, true, "//---------\n// message\n//---------\n", "//---------\n// message\n//---------\n"},
-	{"message", "//", "-", 2, true, true, "//-----------\n//  message\n//-----------\n", "//---------\n// message\n//---------\n"},
-	{"message", "##", "-", 3, true, true, "##-------------\n##   message\n##-------------\n", "//---------\n// message\n//---------\n"},
-	{"NoHeader", "//", "-", 2, false, true, "//  NoHeader\n//------------\n", "//----------\n// NoHeader\n//----------\n"},
-	{"NoFooter", "//", "-", 2, true, false, "//------------\n//  NoFooter\n", "//----------\n// NoFooter\n//----------\n"},
-	{"NoHeaderFooter", "//", "-", 2, false, false, "//  NoHeaderFooter\n", "//----------------\n// NoHeaderFooter\n//----------------\n"},
+	{
+		"message", "//", "-", 0, true, true,
+		strings.Join([]string{"//-------", "//message", "//-------"}, "\n"),
+		strings.Join([]string{"//---------", "// message", "//---------"}, "\n"),
+	},
+	{
+		"message", "//", "-", 1, true, true,
+		strings.Join([]string{"//---------", "// message", "//---------"}, "\n"),
+		strings.Join([]string{"//---------", "// message", "//---------"}, "\n"),
+	},
+	{
+		"message", "//", "-", 2, true, true,
+		strings.Join([]string{"//-----------", "//  message", "//-----------"}, "\n"),
+		strings.Join([]string{"//---------", "// message", "//---------"}, "\n"),
+	},
+	{
+		"message", "##", "-", 3, true, true,
+		strings.Join([]string{"##-------------", "##   message", "##-------------"}, "\n"),
+		strings.Join([]string{"//---------", "// message", "//---------"}, "\n"),
+	},
+	{
+		"NoHeader", "//", "-", 2, false, true,
+		strings.Join([]string{"//  NoHeader", "//------------"}, "\n"),
+		strings.Join([]string{"//----------", "// NoHeader", "//----------"}, "\n"),
+	},
+	{
+		"NoFooter", "//", "-", 2, true, false,
+		strings.Join([]string{"//------------", "//  NoFooter"}, "\n"),
+		strings.Join([]string{"//----------", "// NoFooter", "//----------"}, "\n"),
+	},
+	{
+		"NoHeaderFooter", "//", "-", 2, false, false,
+		strings.Join([]string{"//  NoHeaderFooter"}, "\n"),
+		strings.Join([]string{"//----------------", "// NoHeaderFooter", "//----------------"}, "\n"),
+	},
+	{
+		"message A", "//", "-", 0, true, true,
+		strings.Join([]string{"//---------", "//message A", "//---------"}, "\n"),
+		strings.Join([]string{"//-----------", "// message A", "//-----------"}, "\n"),
+	},
+	{
+		"message A", "//", "-", 1, true, true,
+		strings.Join([]string{"//-----------", "// message A", "//-----------"}, "\n"),
+		strings.Join([]string{"//-----------", "// message A", "//-----------"}, "\n"),
+	},
+	{
+		"message A message B", "//", "-", 1, true, true,
+		strings.Join([]string{"//---------------------", "// message A message B", "//---------------------"}, "\n"),
+		strings.Join([]string{"//---------------------", "// message A message B", "//---------------------"}, "\n"),
+	},
+	{
+		"message A" + "\n" + "message B", "//", "-", 1, true, true,
+		strings.Join([]string{"//-----------", "// message A", "// message B", "//-----------"}, "\n"),
+		strings.Join([]string{"//-----------", "// message A", "// message B", "//-----------"}, "\n"),
+	},
+	{
+		"message A" + "\n" + "message B" + "\n" + "message C", "//", "-", 1, true, true,
+		strings.Join([]string{"//-----------", "// message A", "// message B", "// message C", "//-----------"}, "\n"),
+		strings.Join([]string{"//-----------", "// message A", "// message B", "// message C", "//-----------"}, "\n"),
+	},
+	{
+		"message A" + "\n" + "message B" + "\n" + "\t" + "message C", "//", "-", 1, true, true,
+		strings.Join([]string{"//---------------", "// message A", "// message B", "//     message C", "//---------------"}, "\n"),
+		strings.Join([]string{"//---------------", "// message A", "// message B", "//     message C", "//---------------"}, "\n"),
+	},
 }
 
 func TestBannerDefault(t *testing.T) {
@@ -31,13 +91,8 @@ func TestBannerDefault(t *testing.T) {
 		t.Run(tc.msg, func(t *testing.T) {
 			t.Parallel()
 			b := NewBanner()
-			res := b.SPrintln(tc.msg)
-			// fmt.Println(res)
-			// fmt.Println(tc.resDefault)
-			if !assert.True(t, assert.ObjectsAreEqualValues(tc.resDefault, res)) {
-				t.Logf("expected: %s", tc.resDefault)
-				t.Logf("actual: %s", res)
-			}
+			res := b.SPrint(tc.msg)
+			assert.Equal(t, tc.resDefault, res)
 		})
 	}
 }
@@ -54,69 +109,11 @@ func TestBannerMsg(t *testing.T) {
 			if !tc.footer {
 				b.NoFooter()
 			}
-			res := b.SPrintln(tc.msg)
-			// fmt.Println(res)
-			// fmt.Println(tc.res)
-			if !assert.True(t, assert.ObjectsAreEqualValues(tc.res, res)) {
-				t.Logf("expected: %s", tc.res)
-				t.Logf("actual: %s", res)
-			}
-		})
-	}
-}
+			fmt.Printf("Expected\n%s\n", tc.res)
+			res := b.SPrint(tc.msg)
+			fmt.Printf("Got:\n%s\n", res)
 
-var BannerMultiLinePatterns = []struct {
-	msg string
-	res string
-}{
-	{
-		"message",
-		"//---------" + "\n" +
-			"// message" + "\n" +
-			"//---------" + "\n",
-	},
-	{
-		"message A message B",
-		"//---------------------" + "\n" +
-			"// message A message B" + "\n" +
-			"//---------------------" + "\n",
-	},
-	{
-		"message A" + "\n" + "message B",
-		"//-----------" + "\n" +
-			"// message A" + "\n" +
-			"// message B" + "\n" +
-			"//-----------" + "\n",
-	},
-	{
-		"message A" + "\n" + "message B" + "\n" + "message C",
-		"//-----------" + "\n" +
-			"// message A" + "\n" +
-			"// message B" + "\n" +
-			"// message C" + "\n" +
-			"//-----------" + "\n",
-	},
-	{
-		"message A" + "\n" + "message B" + "\n" + "\t" + "message C",
-		"//------------" + "\n" +
-			"// message A" + "\n" +
-			"// message B" + "\n" +
-			"// " + "\t" + "message C" + "\n" +
-			"//------------" + "\n",
-	},
-}
-
-func TestBannerMultiLine(t *testing.T) {
-	b := NewBanner()
-	for _, tc := range BannerMultiLinePatterns {
-		tc := tc
-		t.Run(tc.msg, func(t *testing.T) {
-			t.Parallel()
-			res := b.SPrintln(tc.msg)
-			if !assert.True(t, assert.ObjectsAreEqualValues(tc.res, res)) {
-				t.Logf("expected: %s", tc.res)
-				t.Logf("actual: %s", res)
-			}
+			assert.Equal(t, tc.res, res)
 		})
 	}
 }

@@ -61,26 +61,34 @@ func (b *Banner) NoFooter() *Banner {
 }
 
 func (b *Banner) Println(msg ...string) {
-	fmt.Printf("%s", b.SPrintln(msg...))
+	fmt.Printf("%s\n", b.SPrint(msg...))
 }
 
-func (b *Banner) SPrintln(msg ...string) string {
-	msgs := strings.Join(msg, " ")
+func (b *Banner) SPrint(msg ...string) string {
+	// Join the message lines into a single string
+	msgs := []string{}
 	msgsLen := []int{}
-	for _, m := range strings.Split(msgs, "\n") {
+	for _, v := range strings.Split(strings.Join(msg, " "), "\n") {
+		m := b.SPat + RJust("", b.Pad) + strings.ReplaceAll(v, "\t", "    ")
 		msgsLen = append(msgsLen, len(m))
+		msgs = append(msgs, m)
 	}
-	msgs = strings.ReplaceAll(msgs, "\n", "\n"+b.SPat+RJust("", b.Pad))
-	totalLen := len(b.SPat) + slices.Max(msgsLen) + b.Pad*2 + len(b.EPat)
-	bannerMsg := b.SPat + RJust("", b.Pad) + msgs
-	bannerHeader := ""
+	// Calculate the total length of the banner)
+	totalLen := slices.Max(msgsLen) + b.Pad
+
+	banner := []string{}
+	// Append the header pattern to the banner if the header is enabled
 	if b.Header {
-		bannerHeader = RightLen(b.SPat, b.Pat, totalLen) + "\n"
-	}
-	bannerFooter := ""
-	if b.Footer {
-		bannerFooter = "\n" + RightLen(b.SPat, b.Pat, totalLen)
+		banner = append(banner, RightLen(b.SPat, b.Pat, totalLen))
 	}
 
-	return bannerHeader + bannerMsg + bannerFooter + "\n"
+	// Append the banner message to the banner
+	banner = append(banner, strings.Join(msgs, "\n"))
+
+	// Append the footer pattern to the banner if the footer is enabled
+	if b.Footer {
+		banner = append(banner, RightLen(b.SPat, b.Pat, totalLen))
+	}
+
+	return strings.Join(banner, "\n")
 }
