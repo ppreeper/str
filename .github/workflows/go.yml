@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main]
 
+# Grant permissions needed to upload coverage to GitHub
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,9 +29,16 @@ jobs:
         run: |
           go test -coverprofile=coverage.out -covermode=atomic -v ./...
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+      - name: Install gocover-cobertura
+        run: |
+          go install github.com/t-yuki/gocover-cobertura@latest
+          echo "gocover-cobertura installed at $(go env GOPATH)/bin"
+
+      - name: Convert coverage to Cobertura XML
+        run: |
+          $(go env GOPATH)/bin/gocover-cobertura < coverage.out > coverage.xml
+
+      - name: Upload coverage to GitHub (native)
+        uses: actions/upload-coverage@v1
         with:
-          files: coverage.out
-          flags: unit
-          fail_ci_if_error: true
+          path: coverage.xml
