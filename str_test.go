@@ -1,12 +1,12 @@
 package str
 
 import (
+	"runtime"
 	"testing"
 
 	"github.com/ppreeper/assert"
 )
 
-// LeftRightPatterns
 var LeftRightPatterns = []struct {
 	src   string
 	pat   string
@@ -28,10 +28,8 @@ var LeftRightPatterns = []struct {
 	{"ABCD", "aa", 2, "aaaaABCD", "ABCDaaaa"},
 }
 
-// Left
 func TestLeft(t *testing.T) {
 	for _, tc := range LeftRightPatterns {
-		tc := tc
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := Left(tc.src, tc.pat, tc.count)
@@ -40,10 +38,8 @@ func TestLeft(t *testing.T) {
 	}
 }
 
-// Right
 func TestRight(t *testing.T) {
 	for _, tc := range LeftRightPatterns {
-		tc := tc
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := Right(tc.src, tc.pat, tc.count)
@@ -52,7 +48,6 @@ func TestRight(t *testing.T) {
 	}
 }
 
-// TruncLeftRightPatterns
 var TruncLeftRightPatterns = []struct {
 	src   string
 	count int
@@ -72,10 +67,8 @@ var TruncLeftRightPatterns = []struct {
 	{"ABC", 4, "ABC", "ABC"},
 }
 
-// TruncLeft
 func TestTruncLeft(t *testing.T) {
 	for _, tc := range TruncLeftRightPatterns {
-		tc := tc
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := TruncLeft(tc.src, tc.count)
@@ -84,10 +77,8 @@ func TestTruncLeft(t *testing.T) {
 	}
 }
 
-// TruncRight
 func TestTruncRight(t *testing.T) {
 	for _, tc := range TruncLeftRightPatterns {
-		tc := tc
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := TruncRight(tc.src, tc.count)
@@ -96,7 +87,6 @@ func TestTruncRight(t *testing.T) {
 	}
 }
 
-// LeftRightLenPatterns
 var LeftRightLenPatterns = []struct {
 	src   string
 	pat   string
@@ -122,10 +112,8 @@ var LeftRightLenPatterns = []struct {
 	{"ABCD", "aa", 8, "aaaaABCD", "ABCDaaaa"},
 }
 
-// LeftLen
 func TestLeftLen(t *testing.T) {
 	for _, tc := range LeftRightLenPatterns {
-		tc := tc
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := LeftLen(tc.src, tc.pat, tc.count)
@@ -134,10 +122,8 @@ func TestLeftLen(t *testing.T) {
 	}
 }
 
-// RightLen
 func TestRightLen(t *testing.T) {
 	for _, tc := range LeftRightLenPatterns {
-		tc := tc
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := RightLen(tc.src, tc.pat, tc.count)
@@ -146,7 +132,6 @@ func TestRightLen(t *testing.T) {
 	}
 }
 
-// LJustRJustPatterns
 var LJustRJustPatterns = []struct {
 	src   string
 	count int
@@ -156,7 +141,6 @@ var LJustRJustPatterns = []struct {
 	{"D", 1, "D ", " D"},
 	{"D", -1, "D", "D"},
 	{"D", 0, "D", "D"},
-	{"D", 1, "D ", " D"},
 	{"D", 2, "D  ", "  D"},
 	{"D", 3, "D   ", "   D"},
 	{"D", 4, "D    ", "    D"},
@@ -168,10 +152,8 @@ var LJustRJustPatterns = []struct {
 	{"ABCD", 5, "ABCD     ", "     ABCD"},
 }
 
-// LJust
 func TestLJust(t *testing.T) {
 	for _, tc := range LJustRJustPatterns {
-		tc := tc
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := LJust(tc.src, tc.count)
@@ -180,10 +162,8 @@ func TestLJust(t *testing.T) {
 	}
 }
 
-// RJust
 func TestRJust(t *testing.T) {
 	for _, tc := range LJustRJustPatterns {
-		tc := tc
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := RJust(tc.src, tc.count)
@@ -192,7 +172,6 @@ func TestRJust(t *testing.T) {
 	}
 }
 
-// LJustRJustLenPatterns
 var LJustRJustLenPatterns = []struct {
 	src   string
 	count int
@@ -202,7 +181,6 @@ var LJustRJustLenPatterns = []struct {
 	{"D", 1, "D", "D"},
 	{"D", -1, "", ""},
 	{"D", 0, "", ""},
-	{"D", 1, "D", "D"},
 	{"D", 2, "D ", " D"},
 	{"D", 3, "D  ", "  D"},
 	{"D", 4, "D   ", "   D"},
@@ -214,10 +192,8 @@ var LJustRJustLenPatterns = []struct {
 	{"ABCD", 5, "ABCD ", " ABCD"},
 }
 
-// LJustLen
 func TestLJustLen(t *testing.T) {
 	for _, tc := range LJustRJustLenPatterns {
-		tc := tc
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := LJustLen(tc.src, tc.count)
@@ -226,10 +202,8 @@ func TestLJustLen(t *testing.T) {
 	}
 }
 
-// RJustLen
 func TestRJustLen(t *testing.T) {
 	for _, tc := range LJustRJustLenPatterns {
-		tc := tc
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := RJustLen(tc.src, tc.count)
@@ -238,7 +212,6 @@ func TestRJustLen(t *testing.T) {
 	}
 }
 
-// ZFillPatterns
 var ZFillPatterns = []struct {
 	src      string
 	count    int
@@ -247,7 +220,6 @@ var ZFillPatterns = []struct {
 	{"D", 1, "0D"},
 	{"D", -1, "D"},
 	{"D", 0, "D"},
-	{"D", 1, "0D"},
 	{"D", 2, "00D"},
 	{"D", 3, "000D"},
 	{"D", 4, "0000D"},
@@ -261,7 +233,6 @@ var ZFillPatterns = []struct {
 
 func TestZFill(t *testing.T) {
 	for _, tc := range ZFillPatterns {
-		tc := tc
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := ZFill(tc.src, tc.count)
@@ -270,7 +241,6 @@ func TestZFill(t *testing.T) {
 	}
 }
 
-// ZFillLenPatterns
 var ZFillLenPatterns = []struct {
 	src      string
 	count    int
@@ -279,7 +249,6 @@ var ZFillLenPatterns = []struct {
 	{"D", 1, "D"},
 	{"D", -1, ""},
 	{"D", 0, ""},
-	{"D", 1, "D"},
 	{"D", 2, "0D"},
 	{"D", 3, "00D"},
 	{"D", 4, "000D"},
@@ -294,7 +263,6 @@ var ZFillLenPatterns = []struct {
 
 func TestZFillLen(t *testing.T) {
 	for _, tc := range ZFillLenPatterns {
-		tc := tc
 		t.Run(tc.src, func(t *testing.T) {
 			t.Parallel()
 			res := ZFillLen(tc.src, tc.count)
@@ -303,327 +271,382 @@ func TestZFillLen(t *testing.T) {
 	}
 }
 
-// ####################
-// Benchmarks
-
-// ##########
-// Left
 func BenchmarkLeft_D_a_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			Left("D", "a", 4)
+			r = Left("D", "a", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkLeft_D_aa_2(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			Left("D", "aa", 2)
+			r = Left("D", "aa", 2)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkLeft_D_utf8_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			Left("D", "→", 4)
+			r = Left("D", "→", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkLeft_D_utf8_2_2(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			Left("D", "→→", 2)
+			r = Left("D", "→→", 2)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkLeft_D_a_200_1(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			Left("D", "a", 200)
+			r = Left("D", "a", 200)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkLeft_D_a_100_2(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			Left("D", "aa", 100)
+			r = Left("D", "aa", 100)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
-// Right
 func BenchmarkRight_D_a_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			Right("D", "a", 4)
+			r = Right("D", "a", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkRight_D_aa_2(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			Right("D", "aa", 2)
+			r = Right("D", "aa", 2)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkRight_D_utf8_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			Right("D", "→", 4)
+			r = Right("D", "→", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkRight_D_utf8_2_2(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			Right("D", "→→", 2)
+			r = Right("D", "→→", 2)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkRight_D_a_200_1(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			Right("D", "a", 200)
+			r = Right("D", "a", 200)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkRight_D_a_100_2(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			Right("D", "aa", 100)
+			r = Right("D", "aa", 100)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
-// ##########
-// TruncLeft
 func BenchmarkTruncLeft_ABCD_2(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			TruncLeft("ABCD", 2)
+			r = TruncLeft("ABCD", 2)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
-// TruncRight
 func BenchmarkTruncRight_ABCD_2(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			TruncRight("ABCD", 2)
+			r = TruncRight("ABCD", 2)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
-// ##########
-// LeftLen
 func BenchmarkLeftLen_D_utf8_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			LeftLen("D", "→", 4)
+			r = LeftLen("D", "→", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkLeftLen_D_a_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			LeftLen("D", "a", 4)
+			r = LeftLen("D", "a", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkLeftLen_D_a_200(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			LeftLen("D", "a", 200)
+			r = LeftLen("D", "a", 200)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
-// RightLen
-
 func BenchmarkRightLen_D_utf8_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			RightLen("D", "→", 4)
+			r = RightLen("D", "→", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkRightLen_D_a_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			RightLen("D", "a", 4)
+			r = RightLen("D", "a", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkRightLen_D_a_200(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			RightLen("D", "a", 200)
+			r = RightLen("D", "a", 200)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
-// ##########
-// LJust
 func BenchmarkLJust_utf8_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			LJust("→", 4)
+			r = LJust("→", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkLJust_D_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			LJust("D", 4)
+			r = LJust("D", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkLJust_D_a_200(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			LJust("D", 200)
+			r = LJust("D", 200)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
-// RJust
 func BenchmarkRJust_utf8_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			RJust("→", 4)
+			r = RJust("→", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkRJust_D_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			RJust("D", 4)
+			r = RJust("D", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkRJust_D_a_200(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			RJust("D", 200)
+			r = RJust("D", 200)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
-// ##########
-// LJustLen
 func BenchmarkLJustLen_utf8_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			LJustLen("→", 4)
+			r = LJustLen("→", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkLJustLen_D_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			LJustLen("D", 4)
+			r = LJustLen("D", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkLJustLen_D_a_200(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			LJustLen("D", 200)
+			r = LJustLen("D", 200)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
-// RJustLen
 func BenchmarkRJustLen_utf8_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			RJustLen("→", 4)
+			r = RJustLen("→", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkRJustLen_D_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			RJustLen("D", 4)
+			r = RJustLen("D", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkRJustLen_D_a_200(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			RJustLen("D", 200)
+			r = RJustLen("D", 200)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
-// ZFill
 func BenchmarkZFill_D_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			ZFill("D", 4)
+			r = ZFill("D", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkZFill_ABCD_8(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			ZFill("DDDD", 8)
+			r = ZFill("DDDD", 8)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkZFill_D_a_200(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			ZFill("D", 200)
+			r = ZFill("D", 200)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
-// ZFillLen
 func BenchmarkZFillLen_D_4(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			ZFillLen("D", 4)
+			r = ZFillLen("D", 4)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkZFillLen_ABCD_8(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			ZFillLen("DDDD", 8)
+			r = ZFillLen("DDDD", 8)
 		}
+		runtime.KeepAlive(r)
 	})
 }
 
 func BenchmarkZFillLen_D_a_200(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			ZFillLen("D", 200)
+			r = ZFillLen("D", 200)
 		}
+		runtime.KeepAlive(r)
 	})
 }

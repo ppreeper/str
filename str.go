@@ -1,26 +1,54 @@
 package str
 
-import (
-	"strings"
-)
+import "unsafe"
 
-// Left pads string on left side with pattern pat, count count times
+// repeatFill fills buf[0:n] with s repeated, using copy-doubling.
+// n must equal len(s) * k for some integer k >= 1.
+func repeatFill(buf []byte, s string, n int) {
+	bp := copy(buf, s)
+	for bp < n {
+		bp += copy(buf[bp:n], buf[:bp])
+	}
+}
+
+// byteFill fills buf[0:n] with byte b, using copy-doubling.
+func byteFill(buf []byte, b byte, n int) {
+	buf[0] = b
+	bp := 1
+	for bp < n {
+		bp += copy(buf[bp:n], buf[:bp])
+	}
+}
+
+// Left prepends pat repeated count times to the left of src.
 func Left(src string, pat string, count int) string {
 	if count <= 0 || len(pat) < 1 {
 		return src
 	}
-	return strings.Repeat(pat, count) + src
+	padLen := len(pat) * count
+	total := padLen + len(src)
+	buf := make([]byte, total)
+	repeatFill(buf[:padLen], pat, padLen)
+	copy(buf[padLen:], src)
+	return unsafe.String(unsafe.SliceData(buf), total)
 }
 
-// Right pads string on right side with pattern pat, count count times
+// Right appends pat repeated count times to the right of src.
 func Right(src string, pat string, count int) string {
 	if count <= 0 || len(pat) < 1 {
 		return src
 	}
-	return src + strings.Repeat(pat, count)
+	padLen := len(pat) * count
+	total := len(src) + padLen
+	buf := make([]byte, total)
+	copy(buf, src)
+	repeatFill(buf[len(src):], pat, padLen)
+	return unsafe.String(unsafe.SliceData(buf), total)
 }
 
-// TruncLeft returns the first character or characters of a string.
+// TruncLeft returns the first length bytes of src.
+// Length is measured in bytes, not runes; callers working with multi-byte
+// characters should ensure length falls on a rune boundary.
 func TruncLeft(src string, length int) string {
 	if length <= 0 {
 		return ""
@@ -31,7 +59,9 @@ func TruncLeft(src string, length int) string {
 	return src[:length]
 }
 
-// TruncRight returns the last character or characters of a string.
+// TruncRight returns the last length bytes of src.
+// Length is measured in bytes, not runes; callers working with multi-byte
+// characters should ensure length falls on a rune boundary.
 func TruncRight(src string, length int) string {
 	if length <= 0 {
 		return ""
@@ -42,7 +72,11 @@ func TruncRight(src string, length int) string {
 	return src[len(src)-length:]
 }
 
-// LeftLen pads string on left side with pattern, returns right side string of length
+// LeftLen pads src on the left with pat, returning a string of exactly length bytes.
+// The padding pattern is right-aligned: if the needed padding is not a multiple of
+// len(pat), the leftmost bytes contain a partial tail of pat.
+// Length is measured in bytes, not runes; callers working with multi-byte
+// characters should ensure length falls on a rune boundary.
 func LeftLen(src string, pat string, length int) string {
 	if length <= 0 {
 		return ""
@@ -50,11 +84,29 @@ func LeftLen(src string, pat string, length int) string {
 	if len(pat) < 1 {
 		return src
 	}
-	ret := strings.Repeat(pat, length) + src
-	return ret[len(ret)-length:]
+	needed := length - len(src)
+	if needed <= 0 {
+		return src[len(src)-length:]
+	}
+	buf := make([]byte, length)
+	fullReps := needed / len(pat)
+	remainder := needed % len(pat)
+	off := 0
+	if remainder > 0 {
+		off += copy(buf, pat[len(pat)-remainder:])
+	}
+	if fullReps > 0 {
+		repeatFill(buf[off:needed], pat, fullReps*len(pat))
+	}
+	copy(buf[needed:], src)
+	return unsafe.String(unsafe.SliceData(buf), length)
 }
 
-// RightLen pads string on left side with p, returns string of length l
+// RightLen pads src on the right with pat, returning a string of exactly length bytes.
+// The padding pattern is left-aligned: if the needed padding is not a multiple of
+// len(pat), the rightmost bytes contain a partial head of pat.
+// Length is measured in bytes, not runes; callers working with multi-byte
+// characters should ensure length falls on a rune boundary.
 func RightLen(src string, pat string, length int) string {
 	if length <= 0 {
 		return ""
@@ -62,57 +114,106 @@ func RightLen(src string, pat string, length int) string {
 	if len(pat) < 1 {
 		return src
 	}
-	ret := src + strings.Repeat(pat, length)
-	return ret[:length]
+	needed := length - len(src)
+	if needed <= 0 {
+		return src[:length]
+	}
+	buf := make([]byte, length)
+	copy(buf, src)
+	fullReps := needed / len(pat)
+	remainder := needed % len(pat)
+	fullLen := fullReps * len(pat)
+	if fullReps > 0 {
+		repeatFill(buf[len(src):len(src)+fullLen], pat, fullLen)
+	}
+	if remainder > 0 {
+		copy(buf[len(src)+fullLen:], pat[:remainder])
+	}
+	return unsafe.String(unsafe.SliceData(buf), length)
 }
 
-// LJust returns left justified string with space(s) filler
+// LJust returns src left-justified by appending count spaces to the right.
 func LJust(src string, count int) string {
 	if count <= 0 {
 		return src
 	}
-	return src + strings.Repeat(" ", count)
+	total := len(src) + count
+	buf := make([]byte, total)
+	copy(buf, src)
+	byteFill(buf[len(src):], ' ', count)
+	return unsafe.String(unsafe.SliceData(buf), total)
 }
 
-// LJustLen returns left justified string with space(s) filler of length
+// LJustLen returns src left-justified with trailing spaces, exactly length bytes.
+// Length is measured in bytes, not runes; callers working with multi-byte
+// characters should ensure length falls on a rune boundary.
 func LJustLen(src string, length int) string {
 	if length <= 0 {
 		return ""
 	}
-	ret := src + strings.Repeat(" ", length)
-	return ret[:length]
+	needed := length - len(src)
+	if needed <= 0 {
+		return src[:length]
+	}
+	buf := make([]byte, length)
+	copy(buf, src)
+	byteFill(buf[len(src):], ' ', needed)
+	return unsafe.String(unsafe.SliceData(buf), length)
 }
 
-// RJust returns right justified string with space(s) filler
+// RJust returns src right-justified by prepending count spaces to the left.
 func RJust(src string, count int) string {
 	if count <= 0 {
 		return src
 	}
-	return strings.Repeat(" ", count) + src
+	total := count + len(src)
+	buf := make([]byte, total)
+	byteFill(buf[:count], ' ', count)
+	copy(buf[count:], src)
+	return unsafe.String(unsafe.SliceData(buf), total)
 }
 
-// RJustLen returns right justified string with space(s) filler of length
+// RJustLen returns src right-justified with leading spaces, exactly length bytes.
+// Length is measured in bytes, not runes; callers working with multi-byte
+// characters should ensure length falls on a rune boundary.
 func RJustLen(src string, length int) string {
 	if length <= 0 {
 		return ""
 	}
-	ret := strings.Repeat(" ", length) + src
-	return ret[len(ret)-length:]
+	needed := length - len(src)
+	if needed <= 0 {
+		return src[len(src)-length:]
+	}
+	buf := make([]byte, length)
+	byteFill(buf[:needed], ' ', needed)
+	copy(buf[needed:], src)
+	return unsafe.String(unsafe.SliceData(buf), length)
 }
 
-// ZFill fills string with 0 on left c time
+// ZFill prepends count zeros to the left of src.
 func ZFill(src string, count int) string {
 	if count <= 0 {
 		return src
 	}
-	return strings.Repeat("0", count) + src
+	total := count + len(src)
+	buf := make([]byte, total)
+	byteFill(buf[:count], '0', count)
+	copy(buf[count:], src)
+	return unsafe.String(unsafe.SliceData(buf), total)
 }
 
-// ZFillLen fills string with 0 on left side returns string length of l
+// ZFillLen prepends zeros to src on the left, returning a string of exactly length bytes.
+// Length is measured in bytes, not runes.
 func ZFillLen(src string, length int) string {
 	if length <= 0 {
 		return ""
 	}
-	ret := strings.Repeat("0", length) + src
-	return ret[len(ret)-length:]
+	needed := length - len(src)
+	if needed <= 0 {
+		return src[len(src)-length:]
+	}
+	buf := make([]byte, length)
+	byteFill(buf[:needed], '0', needed)
+	copy(buf[needed:], src)
+	return unsafe.String(unsafe.SliceData(buf), length)
 }

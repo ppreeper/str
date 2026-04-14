@@ -1,6 +1,7 @@
 package str
 
 import (
+	"runtime"
 	"strings"
 	"testing"
 
@@ -123,13 +124,10 @@ func TestBannerWithConfig(t *testing.T) {
 
 func TestBannerDefault(t *testing.T) {
 	for _, tc := range BannerPatterns {
-		tc := tc
 		t.Run(tc.msg, func(t *testing.T) {
 			t.Parallel()
 			b := NewBanner()
 			res := b.SPrint(tc.msg)
-			// fmt.Printf("expected:\n%s\n", tc.resDefault)
-			// fmt.Printf("got:\n%s\n", res)
 			assert.Equal(t, tc.resDefault, res)
 		})
 	}
@@ -137,7 +135,6 @@ func TestBannerDefault(t *testing.T) {
 
 func TestBannerMsg(t *testing.T) {
 	for _, tc := range BannerPatterns {
-		tc := tc
 		t.Run(tc.msg, func(t *testing.T) {
 			t.Parallel()
 			b := NewBanner().StartPattern(tc.spat).Pattern(tc.pat).Padding(tc.padding).EndPattern(tc.epat)
@@ -148,8 +145,6 @@ func TestBannerMsg(t *testing.T) {
 				b.NoFooter()
 			}
 			res := b.SPrint(tc.msg)
-			// fmt.Printf("expected:\n%s\n", tc.res)
-			// fmt.Printf("got:\n%s\n", res)
 			assert.Equal(t, tc.res, res)
 		})
 	}
@@ -158,9 +153,11 @@ func TestBannerMsg(t *testing.T) {
 // BenchmarkBannerDefault benchmarks the default banner generation.
 func BenchmarkBannerDefault(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
+		var r string
 		for pb.Next() {
-			b := NewBanner()
-			b.SPrint("message")
+			bn := NewBanner()
+			r = bn.SPrint("message")
 		}
+		runtime.KeepAlive(r)
 	})
 }
